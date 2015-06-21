@@ -1,6 +1,6 @@
 # Spring JAX-RS
 
-A tool for easy registering of proxy based JAX clients in Spring.
+A tool for easy registering of proxy based JAX-RS clients in Spring.
 
 ## Features
 
@@ -26,8 +26,41 @@ In order to start and running simply add the artifact to your Maven/Gradle build
 
 ## Example
 
+Start by defining the resource interface annotated with JAX-RS annotations.
+
+```
+@Path("/echo")
+public interface EchoResource {
+
+    @GET
+    String get(@PathParam("name") String name);
+}
 ```
 
+Enable the proxy creation on your configuration class and add one of meta annotations: `@EnableRestEasyClient`, `@EnableCxfClient` or `@EnableJerseyClient`.
+ 
+```
+@EnableJaxRsClient(
+    basePackages = "com.app.rest.api",
+    serviceUrl = "localhost:8080/api"
+)
+@EnableRestEasyClient
+@Configuration
+public class AppConfig {
+
+}
+```
+
+Inject the proxy into any Spring bean
+
+```
+public class Service {
+
+    @Autowired
+    private EchoResource echoResource;
+
+    ...
+}
 ```
 
 ## TODO

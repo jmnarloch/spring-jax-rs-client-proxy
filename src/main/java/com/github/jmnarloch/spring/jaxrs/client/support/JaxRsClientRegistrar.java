@@ -52,11 +52,6 @@ public class JaxRsClientRegistrar implements ImportBeanDefinitionRegistrar {
         final Class<? extends ServiceUrlProvider> serviceUrlProvider = get(attributes, "serviceUrlProvider");
         final String serviceUrl = get(attributes, "serviceUrl");
 
-        if (serviceUrl.isEmpty() && serviceUrlProvider == ServiceUrlProvider.class) {
-            throw new IllegalStateException(
-                    "Either EnableJaxRsClient#serviceUrl or EnableJaxRsClient#serviceUrlProvider should be set");
-        }
-
         final Class<?>[] providers = get(attributes, "providers");
 
         addAll(basePackages, attributes, "value");

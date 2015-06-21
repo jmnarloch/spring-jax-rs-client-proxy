@@ -128,10 +128,10 @@ class JaxRsClientClassPathScanner extends ClassPathBeanDefinitionScanner {
         for (BeanDefinitionHolder beanDefinition : beanDefinitions) {
             GenericBeanDefinition definition = (GenericBeanDefinition) beanDefinition.getBeanDefinition();
 
-            final Class<?> serviceClass = definition.getBeanClass();
+            final String serviceClassName = definition.getBeanClassName();
 
             definition.setBeanClass(JaxRsClientProxyFactoryBean.class);
-            definition.getPropertyValues().add("serviceClass", serviceClass);
+            definition.getPropertyValues().add("serviceClass", serviceClassName);
             definition.getPropertyValues().add("serviceUrl", serviceUrl);
             definition.getPropertyValues().add("serviceUrlProvider", serviceUrlProvider);
             definition.getPropertyValues().add("providers", providers);

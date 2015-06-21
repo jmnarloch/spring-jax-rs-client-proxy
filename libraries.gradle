@@ -1,7 +1,8 @@
 ext {
 
     libraries = [
-            springFramework : 'org.springframework:spring-context:4.1.6.RELEASE',
+            springContext : 'org.springframework:spring-context:4.1.6.RELEASE',
+            springTest : 'org.springframework:spring-test:4.1.6.RELEASE',
             restEasyClient : 'org.jboss.resteasy:resteasy-client:3.0.11.Final',
             cxfClient : 'org.apache.cxf:cxf-rt-rs-client:3.1.1',
             jerseyClient : 'org.glassfish.jersey.core:jersey-client:2.18',

@@ -40,7 +40,7 @@ repositories {
 
 dependencies {
 
-    compile (libraries.springFramework)
+    compile (libraries.springContext)
     compile (libraries.restEasyClient)
     compile (libraries.cxfClient)
     compile (libraries.jerseyClient)
@@ -48,6 +48,7 @@ dependencies {
 
     testCompile (libraries.junit)
     testCompile (libraries.mockito)
+    testCompile (libraries.springTest)
 }
 
 findbugs {
