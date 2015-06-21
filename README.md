@@ -1,6 +1,8 @@
-# Spring JAX-RS
+# Spring JAX-RS Client Proxy
 
-A tool for easy registering of proxy based JAX-RS clients in Spring.
+A tool for easier registration of proxy based JAX-RS clients in Spring.
+
+[![Build Status](https://travis-ci.org/jmnarloch/spring-jax-rs-client-proxy.svg?branch=master)](https://travis-ci.org/jmnarloch/spring-jax-rs-client-proxy)
 
 ## Features
 
@@ -37,8 +39,8 @@ public interface EchoResource {
 }
 ```
 
-Enable the proxy creation on your configuration class and add one of meta annotations: `@EnableRestEasyClient`, `@EnableCxfClient` or `@EnableJerseyClient`.
- 
+Enable the proxy creation on your configuration class and add one of meta annotations: `@EnableRestEasyClient`, `@EnableCxfClient` or `@EnableJerseyClient`. 
+
 ```
 @EnableJaxRsClient(
     basePackages = "com.app.rest.api",
@@ -51,7 +53,8 @@ public class AppConfig {
 }
 ```
 
-Inject the proxy into any Spring bean
+Inject the proxy into any Spring bean.
+
 
 ```
 public class Service {
