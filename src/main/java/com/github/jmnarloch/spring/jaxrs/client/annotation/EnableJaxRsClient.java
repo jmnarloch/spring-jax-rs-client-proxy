@@ -53,11 +53,6 @@ public @interface EnableJaxRsClient {
     String[] basePackages() default {};
 
     /**
-     * Specifies the list of optional providers to register.
-     */
-    Class<?>[] providers() default {};
-
-    /**
      * The service url. The url of each independent service will be resolved as relative to this url.
      *
      * Either {@link #serviceUrl()} or {@link #serviceUrlProvider()} must be specified.

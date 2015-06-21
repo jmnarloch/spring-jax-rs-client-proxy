@@ -17,7 +17,11 @@ package com.github.jmnarloch.spring.jaxrs.client;
 
 import com.github.jmnarloch.spring.jaxrs.client.annotation.EnableJaxRsClient;
 import com.github.jmnarloch.spring.jaxrs.client.resteasy.EnableRestEasyClient;
+import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientConfigurer;
+import com.github.jmnarloch.spring.jaxrs.client.support.ProviderRegistry;
 import com.github.jmnarloch.spring.jaxrs.resource.EchoResource;
+import org.jboss.resteasy.plugins.interceptors.encoding.GZIPDecodingInterceptor;
+import org.jboss.resteasy.plugins.interceptors.encoding.GZIPEncodingInterceptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +52,14 @@ public class Demo {
     )
     @EnableRestEasyClient
     @Configuration
-    public static class TestConfig {
+    public static class TestConfig implements JaxRsClientConfigurer {
 
+        @Override
+        public void registerProviders(ProviderRegistry providerRegistry) {
+
+            providerRegistry
+                    .addProvider(GZIPEncodingInterceptor.class)
+                    .addProvider(GZIPDecodingInterceptor.class);
+        }
     }
 }

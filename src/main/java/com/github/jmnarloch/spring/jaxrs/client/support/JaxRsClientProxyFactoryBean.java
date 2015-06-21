@@ -49,11 +49,6 @@ class JaxRsClientProxyFactoryBean implements ApplicationContextAware, FactoryBea
     private Class<? extends ServiceUrlProvider> serviceUrlProvider;
 
     /**
-     * The optional providers to be registered on the context.
-     */
-    private Class<?>[] providers;
-
-    /**
      * Sets the service class.
      *
      * @param serviceClass the service class
@@ -78,15 +73,6 @@ class JaxRsClientProxyFactoryBean implements ApplicationContextAware, FactoryBea
      */
     public void setServiceUrlProvider(Class<? extends ServiceUrlProvider> serviceUrlProvider) {
         this.serviceUrlProvider = serviceUrlProvider;
-    }
-
-    /**
-     * Sets the providers.
-     *
-     * @param providers the providers
-     */
-    public void setProviders(Class<?>[] providers) {
-        this.providers = providers;
     }
 
     /**
@@ -137,7 +123,7 @@ class JaxRsClientProxyFactoryBean implements ApplicationContextAware, FactoryBea
      */
     private Object createServiceProxy() {
 
-        return getProxyFactory().createClientProxy(serviceClass, getServiceUrl(), providers);
+        return getProxyFactory().createClientProxy(serviceClass, getServiceUrl());
     }
 
     /**

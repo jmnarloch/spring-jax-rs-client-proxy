@@ -52,15 +52,12 @@ public class JaxRsClientRegistrar implements ImportBeanDefinitionRegistrar {
         final Class<? extends ServiceUrlProvider> serviceUrlProvider = get(attributes, "serviceUrlProvider");
         final String serviceUrl = get(attributes, "serviceUrl");
 
-        final Class<?>[] providers = get(attributes, "providers");
-
         addAll(basePackages, attributes, "value");
         addAll(basePackages, attributes, "basePackages");
 
         final JaxRsClientClassPathScanner scanner = new JaxRsClientClassPathScanner(registry);
         scanner.setServiceUrl(serviceUrl);
         scanner.setServiceUrlProvider(serviceUrlProvider);
-        scanner.setProviders(providers);
         scanner.scan(toArray(basePackages));
     }
 

@@ -15,23 +15,38 @@
  */
 package com.github.jmnarloch.spring.jaxrs.client.support;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Abstracts all the details of JAX-RS client proxy creation.
- *
- * The concrete implementation of this interface will be responsible for handling all the specific of creation
- * of the proxy classes.
+ * The registry that stores the providers.
  *
  * @author Jakub Narloch
  */
-public interface JaxRsClientProxyFactory {
+public class ProviderRegistry {
 
     /**
-     * Creates the proxy class out of specific interface. The proxy is being created for the service interface.
-     *
-     * @param serviceClass the service class
-     * @param serviceUrl the service url
-     * @param <T> the service type
-     * @return the created proxy
+     * The list of providers.
      */
-    <T> T createClientProxy(Class<T> serviceClass, String serviceUrl);
+    private final List<Class<?>> providers = new ArrayList<Class<?>>();
+
+    /**
+     * Adds the provider.
+     *
+     * @param providerClass the provider class
+     * @return the {@code this} instance
+     */
+    public ProviderRegistry addProvider(Class<?> providerClass) {
+        providers.add(providerClass);
+        return this;
+    }
+
+    /**
+     * Returns the providers list.
+     *
+     * @return the provider list
+     */
+    protected List<Class<?>> getProviders() {
+        return providers;
+    }
 }

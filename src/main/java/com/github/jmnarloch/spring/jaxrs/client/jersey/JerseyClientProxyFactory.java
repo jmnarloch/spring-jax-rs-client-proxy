@@ -16,6 +16,7 @@
 package com.github.jmnarloch.spring.jaxrs.client.jersey;
 
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactory;
+import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactorySupport;
 import org.glassfish.jersey.client.proxy.WebResourceFactory;
 
 import javax.ws.rs.client.Client;
@@ -28,16 +29,28 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author Jakub Narloch
  */
-class JerseyClientProxyFactory implements JaxRsClientProxyFactory {
+class JerseyClientProxyFactory extends JaxRsClientProxyFactorySupport {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public <T> T createClientProxy(Class<T> serviceClass, String serviceUrl, Class<?>[] providers) {
+    public <T> T createClientProxy(Class<T> serviceClass, String serviceUrl) {
 
         final Client client = ClientBuilder.newClient();
+        registerProviders(client);
         final WebTarget target = client.target(serviceUrl);
         return WebResourceFactory.newResource(serviceClass, target);
+    }
+
+    /**
+     * Registers the provider classes.
+     *
+     * @param client the client
+     */
+    private void registerProviders(Client client) {
+        for(Class<?> provider : getProviders()) {
+            client.register(provider);
+        }
     }
 }

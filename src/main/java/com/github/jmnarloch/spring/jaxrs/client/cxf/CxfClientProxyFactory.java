@@ -16,6 +16,7 @@
 package com.github.jmnarloch.spring.jaxrs.client.cxf;
 
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactory;
+import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactorySupport;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 
 import java.util.LinkedList;
@@ -27,15 +28,15 @@ import java.util.List;
  *
  * @author Jakub Narloch
  */
-class CxfClientProxyFactory implements JaxRsClientProxyFactory {
+class CxfClientProxyFactory extends JaxRsClientProxyFactorySupport {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public <T> T createClientProxy(Class<T> serviceClass, String serviceUrl, Class<?>[] providers) {
+    public <T> T createClientProxy(Class<T> serviceClass, String serviceUrl) {
 
-        return JAXRSClientFactory.create(serviceUrl, serviceClass, instantiate(providers));
+        return JAXRSClientFactory.create(serviceUrl, serviceClass, instantiate(getProviders()));
     }
 
     /**

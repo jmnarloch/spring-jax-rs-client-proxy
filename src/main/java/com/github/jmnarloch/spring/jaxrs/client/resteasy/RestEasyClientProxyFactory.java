@@ -16,6 +16,7 @@
 package com.github.jmnarloch.spring.jaxrs.client.resteasy;
 
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactory;
+import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactorySupport;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
@@ -26,17 +27,17 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
  *
  * @author Jakub Narloch
  */
-class RestEasyClientProxyFactory implements JaxRsClientProxyFactory {
+class RestEasyClientProxyFactory extends JaxRsClientProxyFactorySupport {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public <T> T createClientProxy(Class<T> serviceClass, String serviceUrl, Class<?>[] providers) {
+    public <T> T createClientProxy(Class<T> serviceClass, String serviceUrl) {
 
         final ResteasyClientBuilder builder = new ResteasyClientBuilder();
 
-        registerProviders(builder, providers);
+        registerProviders(builder, getProviders());
 
         final ResteasyClient client = builder.build();
         final ResteasyWebTarget target = client.target(serviceUrl);

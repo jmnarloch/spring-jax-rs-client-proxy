@@ -16,22 +16,17 @@
 package com.github.jmnarloch.spring.jaxrs.client.support;
 
 /**
- * Abstracts all the details of JAX-RS client proxy creation.
- *
- * The concrete implementation of this interface will be responsible for handling all the specific of creation
- * of the proxy classes.
+ * An handy utility class that defines abstract method for {@link JaxRsClientConfigurer}.
  *
  * @author Jakub Narloch
  */
-public interface JaxRsClientProxyFactory {
+public class JaxRsClientConfigurerAdapter implements JaxRsClientConfigurer {
 
     /**
-     * Creates the proxy class out of specific interface. The proxy is being created for the service interface.
-     *
-     * @param serviceClass the service class
-     * @param serviceUrl the service url
-     * @param <T> the service type
-     * @return the created proxy
+     * {@inheritDoc}
      */
-    <T> T createClientProxy(Class<T> serviceClass, String serviceUrl);
+    @Override
+    public void registerProviders(ProviderRegistry providerRegistry) {
+
+    }
 }

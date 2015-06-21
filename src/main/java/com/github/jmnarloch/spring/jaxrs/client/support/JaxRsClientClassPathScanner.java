@@ -45,11 +45,6 @@ class JaxRsClientClassPathScanner extends ClassPathBeanDefinitionScanner {
     private Class<? extends ServiceUrlProvider> serviceUrlProvider;
 
     /**
-     * The provider classes.
-     */
-    private Class<?>[] providers;
-
-    /**
      * Creates new instance of {@link JaxRsClientClassPathScanner} class.
      *
      * @param registry the bean definition registry
@@ -75,15 +70,6 @@ class JaxRsClientClassPathScanner extends ClassPathBeanDefinitionScanner {
      */
     public void setServiceUrlProvider(Class<? extends ServiceUrlProvider> serviceUrlProvider) {
         this.serviceUrlProvider = serviceUrlProvider;
-    }
-
-    /**
-     * Sets the providers.
-     *
-     * @param providers the providers
-     */
-    public void setProviders(Class<?>[] providers) {
-        this.providers = providers;
     }
 
     /**
@@ -134,7 +120,6 @@ class JaxRsClientClassPathScanner extends ClassPathBeanDefinitionScanner {
             definition.getPropertyValues().add("serviceClass", serviceClassName);
             definition.getPropertyValues().add("serviceUrl", serviceUrl);
             definition.getPropertyValues().add("serviceUrlProvider", serviceUrlProvider);
-            definition.getPropertyValues().add("providers", providers);
         }
     }
 }
