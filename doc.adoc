@@ -58,7 +58,6 @@ provides additional methods for customization.
 [source, java]
 ----
 
-```
 @EnableJaxRsClient(
     basePackages = "com.app.rest.api",
     serviceUrl = "localhost:8080/api"
@@ -75,7 +74,6 @@ public class AppConfig implements JaxRsClientConfigurer {
                 .addProvider(GZIPDecodingInterceptor.class);
     }
 }
-```
 
 ----
 
