@@ -50,8 +50,10 @@ class CxfClientProxyFactory extends JaxRsClientProxyFactorySupport {
     private List<?> instantiate(Class<?>[] classes) {
         final List<Object> instances = new LinkedList<Object>();
 
-        for (Class<?> clazz : classes) {
-            instances.add(instantiate(clazz));
+        if(classes != null) {
+            for (Class<?> clazz : classes) {
+                instances.add(instantiate(clazz));
+            }
         }
         return instances;
     }

@@ -49,8 +49,11 @@ class JerseyClientProxyFactory extends JaxRsClientProxyFactorySupport {
      * @param client the client
      */
     private void registerProviders(Client client) {
-        for(Class<?> provider : getProviders()) {
-            client.register(provider);
+        final Class<?>[] providers = getProviders();
+        if(providers != null) {
+            for (Class<?> provider : providers) {
+                client.register(provider);
+            }
         }
     }
 }
