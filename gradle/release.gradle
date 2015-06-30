@@ -1,5 +1,6 @@
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'net.researchgate.release'
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
