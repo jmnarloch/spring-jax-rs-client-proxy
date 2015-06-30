@@ -71,3 +71,14 @@ def deployer = uploadArchives.repositories.mavenDeployer
 [installer, deployer]*.pom*.whenConfigured {pom ->
     pom.dependencies.findAll {dep -> dep.scope == 'compile'}*.optional = true
 }
+
+release {
+    tagTemplate = '${version}'
+
+    git {
+        requireBranch = 'master'
+        pushToRemote = 'origin'
+        pushToCurrentBranch = false
+    }
+}
+afterReleaseBuild.dependsOn uploadArchives
