@@ -16,6 +16,7 @@
 package com.github.jmnarloch.spring.jaxrs.client.support;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -32,9 +33,10 @@ class JaxRsClientConfigurerComposite implements JaxRsClientConfigurer {
 
     /**
      * Adds all {@link JaxRsClientConfigurer} instances.
+     *
      * @param configurers the configurers to add
      */
-    void addAll(List<JaxRsClientConfigurer> configurers) {
+    void addAll(Collection<JaxRsClientConfigurer> configurers) {
         this.configurers.addAll(configurers);
     }
 
@@ -44,7 +46,7 @@ class JaxRsClientConfigurerComposite implements JaxRsClientConfigurer {
     @Override
     public void registerProviders(ProviderRegistry providerRegistry) {
 
-        for(JaxRsClientConfigurer configurer : configurers) {
+        for (JaxRsClientConfigurer configurer : configurers) {
             configurer.registerProviders(providerRegistry);
         }
     }
