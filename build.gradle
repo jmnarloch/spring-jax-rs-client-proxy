@@ -18,7 +18,6 @@ sourceCompatibility = 1.7
 
 group = "com.github.jmnarloch"
 archivesBaseName="spring-jax-rs-client-proxy"
-version = "1.0.0-SNAPSHOT"
 
 ext {
     isReleaseVersion = !version.endsWith("SNAPSHOT")
