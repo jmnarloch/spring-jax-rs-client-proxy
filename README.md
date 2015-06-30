@@ -66,26 +66,7 @@ public class Service {
 }
 ```
 
-Additionally it's possible to register additional providers/filters e.g. to enable GZIP compression.
-
-```
-@EnableJaxRsClient(
-    basePackages = "com.app.rest.api",
-    serviceUrl = "localhost:8080/api"
-)
-@EnableRestEasyClient
-@Configuration
-public class AppConfig implements JaxRsClientConfigurer {
-
-    @Override
-    public void registerProviders(ProviderRegistry providerRegistry) {
-
-        providerRegistry
-                .addProvider(GZIPEncodingInterceptor.class)
-                .addProvider(GZIPDecodingInterceptor.class);
-    }
-}
-```
+See the [documentation](doc.adoc) for additional examples
 
 ## TODO
 

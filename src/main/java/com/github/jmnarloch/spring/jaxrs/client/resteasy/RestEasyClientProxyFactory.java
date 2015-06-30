@@ -48,11 +48,11 @@ class RestEasyClientProxyFactory extends JaxRsClientProxyFactorySupport {
      * Registers the provider classes.
      *
      * @param builder  the builder
-     * @param provider the provider classes
+     * @param providers the providers classes
      */
-    private void registerProviders(ResteasyClientBuilder builder, Class<?>[] provider) {
+    private void registerProviders(ResteasyClientBuilder builder, Class<?>[] providers) {
 
-        for (Class<?> filter : provider) {
+        for (Class<?> filter : providers) {
             builder.register(filter);
         }
     }
