@@ -11,11 +11,11 @@ Currently supports: CXF, RESTEasy, Jersey
 
 The JAX-RS 1.1/2.0 is well establish standard, although the fully programmatic approach for coding the service clients
 requires a lot of boilerplate code. An alternative is to use the proxy client generation based on the service contract
-(i.e. annotated service interface) this still has it's pitfalls and has different level of support across the framework
+(i.e. annotated service interface) this still has it's pitfalls and has different level of support across the frameworks
 although it can speed up the development and it is really easy to setup.
 
-Currently there is no out of the box support for registering the services proxy client within the Spring's application
-context so this little utility project tries to fill this gap.
+Currently there is no out of the box support for registering the service proxy clients within the Spring's application
+context, so this little utility project tries to fill this gap.
 
 === Setting up
 
