@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.jmnarloch.spring.jaxrs.client.resteasy;
+package com.github.jmnarloch.spring.jaxrs.client.cxf;
 
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactory;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Configuration;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests the {@link RestEasyClientConfiguration} class.
+ * Tests the {@link EnableCxfClient} class.
  *
  * @author Jakub Narloch
  */
-public class RestEasyClientConfigurationTest {
+public class EnableCxfClientTest {
 
     /**
      * Tests the registration of the proxy factory in application context.
@@ -37,13 +38,22 @@ public class RestEasyClientConfigurationTest {
 
         // given
         final AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(RestEasyClientConfiguration.class);
+                new AnnotationConfigApplicationContext(TestConfig.class);
 
         // when
         JaxRsClientProxyFactory factory = context.getBean(JaxRsClientProxyFactory.class);
 
         // then
         assertNotNull(factory);
-        assertTrue(RestEasyClientProxyFactory.class.equals(factory.getClass()));
+        assertTrue(CxfClientProxyFactory.class.equals(factory.getClass()));
+    }
+
+    /**
+     * Test config.
+     */
+    @EnableCxfClient
+    @Configuration
+    public static class TestConfig {
+
     }
 }

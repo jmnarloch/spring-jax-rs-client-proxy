@@ -18,6 +18,9 @@ package com.github.jmnarloch.spring.jaxrs.client.support;
 import com.github.jmnarloch.spring.jaxrs.client.annotation.ServiceUrlProvider;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.factory.config.BeanExpressionContext;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -135,6 +138,12 @@ class JaxRsClientProxyFactoryBean implements ApplicationContextAware, FactoryBea
 
         try {
             if (!serviceUrl.isEmpty()) {
+
+                ConfigurableBeanFactory beanFactory = getBeanFactory();
+                if(beanFactory != null) {
+                    return (String) beanFactory.getBeanExpressionResolver()
+                            .evaluate(serviceUrl, new BeanExpressionContext(beanFactory, null));
+                }
                 return serviceUrl;
             }
 
@@ -144,6 +153,15 @@ class JaxRsClientProxyFactoryBean implements ApplicationContextAware, FactoryBea
             throw new IllegalStateException("The service url hasn't been specified and " +
                     "no ServiceUrlProvider has been registered in application context.", e);
         }
+    }
+
+    private ConfigurableBeanFactory getBeanFactory() {
+
+        AutowireCapableBeanFactory beanFactory = this.applicationContext.getAutowireCapableBeanFactory();
+        if(beanFactory instanceof ConfigurableBeanFactory) {
+            return (ConfigurableBeanFactory) beanFactory;
+        }
+        return null;
     }
 
     /**

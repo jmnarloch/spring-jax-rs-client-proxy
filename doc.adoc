@@ -36,12 +36,34 @@ public class AppConfig {
 
 ----
 
-=== Specifing the service url
+=== SpEL url resolution
 
-The `EnableJaxRsClient` annotation has `serviceUrl` attribute for setting the root service url, although in real world
-situations it might be more convenient to read the url from external configuration at runtime. In order to do this
-`serviceUrl` can be omitted, in such situations library tries to lookup `ServiceUrlProvider` instance from the
-application context and use that for acquiring the remote service url.
+The `EnableJaxRsClient.serviceUrl` in fact accepts and evaluates any valid SpEL expressions, so it might be more
+convenient to resolve that against configured property source as fallows:
+
+@PropertySources(
+        @PropertySource("classpath:config/app.properties")
+)
+@EnableJaxRsClient(
+    basePackages = "com.app.rest.api",
+    serviceUrl = "#{environment['rest.api.service.url']}"
+)
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        final PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        return configurer;
+    }
+}
+
+=== Specifying the service url
+
+In real world situations it might be more convenient to read the url from external configuration at runtime or
+customize the logic in any other manner. In order to do this `serviceUrl` can be omitted, in such situations
+library tries to lookup `ServiceUrlProvider` instance from the application context and use that for acquiring
+the remote service url.
 
 [source, java]
 ----

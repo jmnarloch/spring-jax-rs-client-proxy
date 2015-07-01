@@ -18,16 +18,17 @@ package com.github.jmnarloch.spring.jaxrs.client.resteasy;
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactory;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Configuration;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests the {@link RestEasyClientConfiguration} class.
+ * Tests the {@link EnableRestEasyClient} class.
  *
  * @author Jakub Narloch
  */
-public class RestEasyClientConfigurationTest {
+public class EnableRestEasyClientTest {
 
     /**
      * Tests the registration of the proxy factory in application context.
@@ -37,7 +38,7 @@ public class RestEasyClientConfigurationTest {
 
         // given
         final AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(RestEasyClientConfiguration.class);
+                new AnnotationConfigApplicationContext(TestConfig.class);
 
         // when
         JaxRsClientProxyFactory factory = context.getBean(JaxRsClientProxyFactory.class);
@@ -45,5 +46,14 @@ public class RestEasyClientConfigurationTest {
         // then
         assertNotNull(factory);
         assertTrue(RestEasyClientProxyFactory.class.equals(factory.getClass()));
+    }
+
+    /**
+     * Test config.
+     */
+    @EnableRestEasyClient
+    @Configuration
+    public static class TestConfig {
+
     }
 }

@@ -47,6 +47,7 @@ dependencies {
     compile (libraries.jerseyClient)
     compile (libraries.jerseyClientProxy)
 
+    testCompile (libraries.springTest)
     testCompile (libraries.junit)
     testCompile (libraries.mockito)
     testCompile (libraries.springTest)
