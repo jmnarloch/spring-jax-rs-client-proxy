@@ -53,10 +53,6 @@ convenient to resolve that against configured property source as fallows:
 @Configuration
 public class AppConfig {
 
-    @Bean
-    public PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
 }
 
 ----

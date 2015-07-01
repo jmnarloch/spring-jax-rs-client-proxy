@@ -81,13 +81,5 @@ public class JaxRsClientProxyFactoryBeanTest {
         public JaxRsClientProxyFactory factory() {
             return mock(JaxRsClientProxyFactory.class);
         }
-
-        @Bean
-        public PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
-            final PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-            configurer.setIgnoreResourceNotFound(true);
-            configurer.setIgnoreUnresolvablePlaceholders(true);
-            return configurer;
-        }
     }
 }
