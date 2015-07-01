@@ -41,6 +41,8 @@ public class AppConfig {
 The `EnableJaxRsClient.serviceUrl` in fact accepts and evaluates any valid SpEL expressions, so it might be more
 convenient to resolve that against configured property source as fallows:
 
+[source, java]
+----
 @PropertySources(
         @PropertySource("classpath:config/app.properties")
 )
@@ -57,6 +59,8 @@ public class AppConfig {
         return configurer;
     }
 }
+
+----
 
 === Specifying the service url
 
