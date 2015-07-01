@@ -55,8 +55,7 @@ public class AppConfig {
 
     @Bean
     public PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
-        final PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        return configurer;
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }
 
