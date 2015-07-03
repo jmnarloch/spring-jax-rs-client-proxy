@@ -140,8 +140,7 @@ public class AppConfig implements JaxRsClientConfigurer {
     public void configureClientBuilder(ClientBuilderConfigurer configurer) {
 
          configurer
-                 .unwrap(ResteasyClientBuilder.class)
-                 .connectionPoolSize(100);
+                 .unwrap(ResteasyClientBuilder.class);
     }
 
 }
