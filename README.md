@@ -67,7 +67,3 @@ public class Service {
 ```
 
 See the [documentation](doc.adoc) for additional examples
-
-## TODO
-
-- Additional configuration options
