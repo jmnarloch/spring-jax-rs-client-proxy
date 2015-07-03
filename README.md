@@ -22,7 +22,7 @@ In order to start and running simply add the artifact to your Maven/Gradle build
 <dependency>
     <groupId>com.github.jmnarloch</groupId>
     <artifactId>spring-jax-rs-client-proxy</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
