@@ -50,4 +50,15 @@ class JaxRsClientConfigurerComposite implements JaxRsClientConfigurer {
             configurer.registerProviders(providerRegistry);
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void configureClientBuilder(ClientBuilderConfigurer configurer) {
+
+        for (JaxRsClientConfigurer conf : configurers) {
+            conf.configureClientBuilder(configurer);
+        }
+    }
 }

@@ -29,4 +29,12 @@ public class JaxRsClientConfigurerAdapter implements JaxRsClientConfigurer {
     public void registerProviders(ProviderRegistry providerRegistry) {
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void configureClientBuilder(ClientBuilderConfigurer configurer) {
+
+    }
 }

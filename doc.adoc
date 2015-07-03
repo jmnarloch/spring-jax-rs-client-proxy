@@ -125,3 +125,48 @@ public class AppConfig implements JaxRsClientConfigurer {
 ----
 
 Note: The providers might be framework specific.
+
+=== Unwrapping the Client builder
+
+If you need access to the underlying `ClientBuilder` for additional configuration options you can access it using
+`ClientBuilderConfigurer.unwrap` method.
+
+[source, java]
+----
+@Configuration
+public class AppConfig implements JaxRsClientConfigurer {
+
+    @Override
+    public void configureClientBuilder(ClientBuilderConfigurer configurer) {
+
+         configurer
+                 .unwrap(ResteasyClientBuilder.class)
+                 .connectionPoolSize(100);
+    }
+
+}
+----
+
+Supported classes are `ResteasyClientBuilder` and `JerseyClientBuilder`.
+
+=== Know issues
+
+The RESTEasy client builder by default does not uses pool connection factory allowing *single* request at a time.
+This is not what would like to have in multi threaded application, to overcome this problem you need to configure
+the connection pool size.
+
+[source, java]
+----
+@Configuration
+public class AppConfig implements JaxRsClientConfigurer {
+
+    @Override
+    public void configureClientBuilder(ClientBuilderConfigurer configurer) {
+
+         configurer
+                 .unwrap(ResteasyClientBuilder.class)
+                 .connectionPoolSize(100);
+    }
+
+}
+----

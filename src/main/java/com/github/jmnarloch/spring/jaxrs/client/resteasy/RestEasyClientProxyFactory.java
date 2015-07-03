@@ -15,11 +15,16 @@
  */
 package com.github.jmnarloch.spring.jaxrs.client.resteasy;
 
+import com.github.jmnarloch.spring.jaxrs.client.support.ClientBuilderConfigurer;
+import com.github.jmnarloch.spring.jaxrs.client.support.ClientBuilderHolder;
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactory;
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactorySupport;
-import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
 /**
  * The RESTEasy {@link JaxRsClientProxyFactory} implementation.
@@ -35,25 +40,68 @@ class RestEasyClientProxyFactory extends JaxRsClientProxyFactorySupport {
     @Override
     public <T> T createClientProxy(Class<T> serviceClass, String serviceUrl) {
 
-        final ResteasyClientBuilder builder = new ResteasyClientBuilder();
+        // creates the client builder instance
+        final ClientBuilder builder = clientBuilder();
 
-        registerProviders(builder, getProviders());
+        // configures the builder
+        configure(builder);
 
-        final ResteasyClient client = builder.build();
-        final ResteasyWebTarget target = client.target(serviceUrl);
-        return target.proxy(serviceClass);
+        // creates the proxy instance
+        return proxy(serviceClass, serviceUrl, builder.build());
+    }
+
+    /**
+     * Creates the new instance of {@link ClientBuilder}.
+     *
+     * @return the client builder
+     */
+    private ClientBuilder clientBuilder() {
+
+        return ClientBuilder.newBuilder();
+    }
+
+    /**
+     * Configures the client builder.
+     *
+     * @param builder the client builder
+     */
+    private void configure(ClientBuilder builder) {
+
+        final ClientBuilderHolder<?> holder = new ClientBuilderHolder<>(builder);
+        final ClientBuilderConfigurer configurer = new ClientBuilderConfigurer(holder);
+
+        // configures the builder
+        configureClientBuilder(configurer);
+
+        // registers the providers
+        registerProviders(holder.getClientBuilder(), getProviders());
+    }
+
+    /**
+     * Creates the proxy instance.
+     *
+     * @param serviceClass the service class
+     * @param serviceUrl   the service url
+     * @param client       the client
+     * @param <T>          the proxy type
+     * @return the proxy instance
+     */
+    private <T> T proxy(Class<T> serviceClass, String serviceUrl, Client client) {
+
+        final WebTarget target = client.target(serviceUrl);
+        return ((ResteasyWebTarget) target).proxy(serviceClass);
     }
 
     /**
      * Registers the provider classes.
      *
-     * @param builder  the builder
-     * @param providers the providers classes
+     * @param clientBuilder the client builder
+     * @param providers     the providers classes
      */
-    private void registerProviders(ResteasyClientBuilder builder, Class<?>[] providers) {
+    private void registerProviders(ClientBuilder clientBuilder, Class<?>[] providers) {
 
         for (Class<?> filter : providers) {
-            builder.register(filter);
+            clientBuilder.register(filter);
         }
     }
 }

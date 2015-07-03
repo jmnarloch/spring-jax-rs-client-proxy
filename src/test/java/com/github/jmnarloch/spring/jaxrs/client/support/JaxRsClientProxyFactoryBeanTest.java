@@ -20,13 +20,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -42,14 +40,10 @@ import static org.mockito.Mockito.verify;
 @ContextConfiguration
 public class JaxRsClientProxyFactoryBeanTest {
 
-
     private JaxRsClientProxyFactoryBean instance;
 
     @Autowired
     private ApplicationContext applicationContext;
-
-    @Value("${rest.api.service.url}")
-    private String url;
 
     @Before
     public void setUp() throws Exception {
@@ -71,6 +65,9 @@ public class JaxRsClientProxyFactoryBeanTest {
         verify(factory).createClientProxy(serviceClass, "http://app.com/rest/api");
     }
 
+    /**
+     * Test config.
+     */
     @PropertySources(
         @PropertySource("classpath:config/app.properties")
     )

@@ -72,4 +72,14 @@ public abstract class JaxRsClientProxyFactorySupport implements JaxRsClientProxy
 
         configurers.registerProviders(providerRegistry);
     }
+
+    /**
+     * Configurers the client builder.
+     *
+     * @param configurer the configurer
+     */
+    protected void configureClientBuilder(ClientBuilderConfigurer configurer) {
+
+        configurers.configureClientBuilder(configurer);
+    }
 }

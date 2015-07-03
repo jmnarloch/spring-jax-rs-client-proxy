@@ -18,9 +18,12 @@ package com.github.jmnarloch.spring.jaxrs.client;
 import com.github.jmnarloch.spring.jaxrs.client.annotation.EnableJaxRsClient;
 import com.github.jmnarloch.spring.jaxrs.client.annotation.ServiceUrlProvider;
 import com.github.jmnarloch.spring.jaxrs.client.resteasy.EnableRestEasyClient;
+import com.github.jmnarloch.spring.jaxrs.client.support.ClientBuilderConfigurer;
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientConfigurer;
+import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientConfigurerAdapter;
 import com.github.jmnarloch.spring.jaxrs.client.support.ProviderRegistry;
 import com.github.jmnarloch.spring.jaxrs.resource.EchoResource;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.plugins.interceptors.encoding.GZIPDecodingInterceptor;
 import org.jboss.resteasy.plugins.interceptors.encoding.GZIPEncodingInterceptor;
 import org.junit.Test;
@@ -54,7 +57,7 @@ public class Demo {
     )
     @EnableRestEasyClient
     @Configuration
-    public static class TestConfig implements JaxRsClientConfigurer {
+    public static class TestConfig extends JaxRsClientConfigurerAdapter {
 
         @Override
         public void registerProviders(ProviderRegistry providerRegistry) {
@@ -62,6 +65,14 @@ public class Demo {
             providerRegistry
                     .addProvider(GZIPEncodingInterceptor.class)
                     .addProvider(GZIPDecodingInterceptor.class);
+        }
+
+        @Override
+        public void configureClientBuilder(ClientBuilderConfigurer configurer) {
+
+            configurer
+                    .unwrap(ResteasyClientBuilder.class)
+                    .connectionPoolSize(100);
         }
     }
 }

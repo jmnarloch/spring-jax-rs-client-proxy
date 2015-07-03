@@ -15,24 +15,34 @@
  */
 package com.github.jmnarloch.spring.jaxrs.client.support;
 
+import javax.ws.rs.client.ClientBuilder;
+
 /**
- * Allows for additional customization of the JAX-RS clients.
+ * The client builder holder.
  *
  * @author Jakub Narloch
  */
-public interface JaxRsClientConfigurer {
+public class ClientBuilderHolder<T extends ClientBuilder> {
 
     /**
-     * Registers the additional providers that can be used for request/response processing.
-     *
-     * @param providerRegistry the provider registry
+     * The client builder.
      */
-    void registerProviders(ProviderRegistry providerRegistry);
+    private final T clientBuilder;
 
     /**
-     * Configurers the client builder.
-     *
-     * @param configurer the configurer
+     * Creates new instance of {@link ClientBuilderHolder} class.
+     * @param clientBuilder the client builder.
      */
-    void configureClientBuilder(ClientBuilderConfigurer configurer);
+    public ClientBuilderHolder(T clientBuilder) {
+        this.clientBuilder = clientBuilder;
+    }
+
+    /**
+     * Retrieves the client builder.
+     *
+     * @return the client builder
+     */
+    public T getClientBuilder() {
+        return clientBuilder;
+    }
 }

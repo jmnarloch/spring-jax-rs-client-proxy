@@ -15,6 +15,8 @@
  */
 package com.github.jmnarloch.spring.jaxrs.client.jersey;
 
+import com.github.jmnarloch.spring.jaxrs.client.support.ClientBuilderConfigurer;
+import com.github.jmnarloch.spring.jaxrs.client.support.ClientBuilderHolder;
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactory;
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientProxyFactorySupport;
 import org.glassfish.jersey.client.proxy.WebResourceFactory;
@@ -37,8 +39,54 @@ class JerseyClientProxyFactory extends JaxRsClientProxyFactorySupport {
     @Override
     public <T> T createClientProxy(Class<T> serviceClass, String serviceUrl) {
 
-        final Client client = ClientBuilder.newClient();
-        registerProviders(client);
+        // creates the client builder instance
+        final ClientBuilder builder = clientBuilder();
+
+        // configures the builder
+        configure(builder);
+
+        // creates the proxy instance
+        return proxy(serviceClass, serviceUrl, builder.build());
+    }
+
+    /**
+     * Creates the new instance of {@link ClientBuilder}.
+     *
+     * @return the client builder
+     */
+    private ClientBuilder clientBuilder() {
+
+        return ClientBuilder.newBuilder();
+    }
+
+    /**
+     * Configures the client builder.
+     *
+     * @param builder the client builder
+     */
+    private void configure(ClientBuilder builder) {
+
+        final ClientBuilderHolder<?> holder = new ClientBuilderHolder<>(builder);
+        final ClientBuilderConfigurer configurer = new ClientBuilderConfigurer(holder);
+
+        // configures the builder
+        configureClientBuilder(configurer);
+
+        // registers the providers
+        registerProviders(holder.getClientBuilder(), getProviders());
+    }
+
+    /**
+     * Creates the proxy instance.
+     *
+     * @param serviceClass the service class
+     * @param serviceUrl   the service url
+     * @param client       the client
+     * @param <T>          the proxy type
+     * @return the proxy instance
+     */
+    private <T> T proxy(Class<T> serviceClass, String serviceUrl, Client client) {
+
         final WebTarget target = client.target(serviceUrl);
         return WebResourceFactory.newResource(serviceClass, target);
     }
@@ -46,14 +94,13 @@ class JerseyClientProxyFactory extends JaxRsClientProxyFactorySupport {
     /**
      * Registers the provider classes.
      *
-     * @param client the client
+     * @param clientBuilder the client builder
+     * @param providers     the providers classes
      */
-    private void registerProviders(Client client) {
-        final Class<?>[] providers = getProviders();
-        if(providers != null) {
-            for (Class<?> provider : providers) {
-                client.register(provider);
-            }
+    private void registerProviders(ClientBuilder clientBuilder, Class<?>[] providers) {
+
+        for (Class<?> filter : providers) {
+            clientBuilder.register(filter);
         }
     }
 }
