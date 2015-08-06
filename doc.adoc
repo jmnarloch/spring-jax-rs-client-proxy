@@ -150,8 +150,8 @@ Supported classes are `ResteasyClientBuilder` and `JerseyClientBuilder`.
 
 === Know issues
 
-The RESTEasy client builder by default does not uses pool connection factory allowing *single* request at a time.
-This is not what would like to have in multi threaded application, to overcome this problem you need to configure
+The RESTEasy client builder by default does not uses pooled connection factory - allowing *single* request at a time.
+This is not what you would like to have in multi threaded application, to overcome this problem you need to configure
 the connection pool size.
 
 [source, java]
