@@ -16,20 +16,18 @@
 package com.github.jmnarloch.spring.jaxrs.client;
 
 import com.github.jmnarloch.spring.jaxrs.client.annotation.EnableJaxRsClient;
-import com.github.jmnarloch.spring.jaxrs.client.annotation.ServiceUrlProvider;
 import com.github.jmnarloch.spring.jaxrs.client.resteasy.EnableRestEasyClient;
 import com.github.jmnarloch.spring.jaxrs.client.support.ClientBuilderConfigurer;
-import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientConfigurer;
 import com.github.jmnarloch.spring.jaxrs.client.support.JaxRsClientConfigurerAdapter;
 import com.github.jmnarloch.spring.jaxrs.client.support.ProviderRegistry;
 import com.github.jmnarloch.spring.jaxrs.resource.EchoResource;
+import com.github.jmnarloch.spring.jaxrs.resource.impl.EchoResourceImpl;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.plugins.interceptors.encoding.GZIPDecodingInterceptor;
 import org.jboss.resteasy.plugins.interceptors.encoding.GZIPEncodingInterceptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -52,7 +50,7 @@ public class Demo {
     }
 
     @EnableJaxRsClient(
-            basePackages = "com.github.jmnarloch.spring.jaxrs.resource",
+            basePackageClasses = EchoResource.class,
             serviceUrl = "localhost:8080/api"
     )
     @EnableRestEasyClient

@@ -53,6 +53,14 @@ public @interface EnableJaxRsClient {
     String[] basePackages() default {};
 
     /**
+     * Specifies the classes to be used for package scanning. Each package of the individual class will scanned to
+     * search for JAX-RS resources.
+     *
+     * Specifying this attribute together with {@link #value()} or {@link #basePackages()} is additive.
+     */
+    Class[] basePackageClasses() default {};
+
+    /**
      * The service url. The url of each independent service will be resolved as relative to this url.
      *
      * Either {@link #serviceUrl()} or {@link #serviceUrlProvider()} must be specified.

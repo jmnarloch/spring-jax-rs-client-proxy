@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2015 the original author or authors
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -54,6 +54,7 @@ public class JaxRsClientRegistrar implements ImportBeanDefinitionRegistrar {
 
         addAll(basePackages, attributes, "value");
         addAll(basePackages, attributes, "basePackages");
+        addAll(basePackages, toPackageNames((Class[]) attributes.get("basePackageClasses")));
 
         final JaxRsClientClassPathScanner scanner = new JaxRsClientClassPathScanner(registry);
         scanner.setServiceUrl(serviceUrl);
@@ -72,6 +73,20 @@ public class JaxRsClientRegistrar implements ImportBeanDefinitionRegistrar {
     @SuppressWarnings("unchecked")
     private static <T> T get(Map<String, Object> attributes, String attributeName) {
         return (T) attributes.get(attributeName);
+    }
+
+    /**
+     * Retrieves the array of package names for each of the individual class.
+     *
+     * @param basePackageClasses the base package classes
+     * @return the array of package names
+     */
+    private static String[] toPackageNames(Class[] basePackageClasses) {
+        final String[] packages = new String[basePackageClasses.length];
+        for (int ind = 0; ind < basePackageClasses.length; ind++) {
+            packages[ind] = basePackageClasses[ind].getPackage().getName();
+        }
+        return packages;
     }
 
     /**
